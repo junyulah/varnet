@@ -74,7 +74,7 @@ let keys = (variable, type, cacheType) => {
     }
 };
 
-// TODO use stack instead of map to store context value
+// TODO [opt] use stack instead of map to store context value
 
 let reduceDeps = (deps, transition, map) => {
     if (deps.length === 0) {

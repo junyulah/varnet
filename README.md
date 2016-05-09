@@ -86,3 +86,40 @@ var ret2 = solve([
 ```
 
 See, you do not need to do any composation of transition or even calculation, you just define variables, then call solve function.
+
+## domain and predicate apis
+
+You can declare the domain of a variable, and use a couple of predicates to variable.
+
+## any
+
+- eg: y = ∀ x ∈ X, x > 10
+
+```js
+let x = defVar();
+let y = defVar(any(x), (x) => x > 10);
+
+let rets = solve([
+    ['domain', x, [2, 4, 6]]
+], [y]); // [false]
+
+let rets2 = solve([
+    ['domain', x, [12, 14, 16]]
+], [y]); // [true]
+```
+
+- eg: ∀ x ∈ X, y ∈ [1, 5, x], x + y > 6
+
+```js
+let x = defVar();
+let Y = defVar(x, (x) => [1, 5, x]);
+let y = defVar();
+domain(y, Y);
+
+let z = defVar(any(x), any(y), (x, y) => x + y > 6);
+solve([
+    ['domain', x, [7, 8]]
+], [z]); // [true]
+```
+
+## other predicates just like any. exist, map, ...
