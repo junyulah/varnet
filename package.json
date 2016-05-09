@@ -1,0 +1,29 @@
+{
+  "name": "varnet",
+  "version": "0.0.1",
+  "description": "A generic approach to solve variables",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LoveKino/varnet.git"
+  },
+  "keywords": [
+    "variable",
+    "network",
+    "solve",
+    "solution",
+    "declaration"
+  ],
+  "author": "ddchen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LoveKino/varnet/issues"
+  },
+  "homepage": "https://github.com/LoveKino/varnet#readme",
+  "devDependencies": {
+    "mocha": "^2.4.5"
+  }
+}
