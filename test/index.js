@@ -163,15 +163,34 @@ describe('varnet', () => {
             return [x, y];
         });
 
+        let m = defVar(map(x), map(j), (x, j) => {
+            return [x, j];
+        });
+
         let rets = solve([
             ['domain', x, [3, 4]]
-        ], [w]);
-
-        assert.deepEqual(rets, [
+        ], [w, m]);
+        assert.deepEqual(rets,
             [
-                [3, [1, 2, 3]],
-                [4, [1, 2, 3, 4]]
+                [
+                    [3, [1, 2, 3]],
+                    [4, [1, 2, 3, 4]]
+                ],
+                [
+                    [
+                        [3, 0],
+                        [3, 1],
+                        [3, 2]
+                    ],
+                    [
+                        [4, 0],
+                        [4, 1],
+                        [4, 2],
+                        [4, 3]
+                    ]
+                ]
             ]
-        ]);
+
+        );
     });
 });
