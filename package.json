@@ -25,5 +25,8 @@
   "homepage": "https://github.com/LoveKino/varnet#readme",
   "devDependencies": {
     "mocha": "^2.4.5"
+  },
+  "dependencies": {
+    "keysmap": "0.0.1"
   }
 }
