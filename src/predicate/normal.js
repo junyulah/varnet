@@ -2,7 +2,7 @@
 
 module.exports = {
     type: 'normal',
-    reduce: (curDep, next) => {
-        return next(curDep.depRet);
+    reduce: (depRet, next) => {
+        return next(depRet);
     }
 };

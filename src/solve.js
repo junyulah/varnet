@@ -69,12 +69,12 @@ let solveTransition = (variable, map, type) => {
         let dep = deps[i];
         let depRet = solveVariable(dep.variable, map, dep.type);
         depsValues.push({
-            depRet,
+            depRet: depRet,
             type: dep.type,
             variable: dep.variable
         });
     }
-    let ret = reduceDep(depsValues, variable.transition, map);
+    let ret = reduceDeps(deps, variable.transition, map);
 
     map.set(keys(variable, type), ret);
     return ret;
@@ -88,21 +88,22 @@ let keys = (variable, type) => {
     }
 };
 
-let reduceDep = (depsValues, transition, map) => {
-    if (depsValues.length === 0) {
+let reduceDeps = (deps, transition, map) => {
+    if (deps.length === 0) {
         return transition();
     } else {
-        let curDep = depsValues[0];
-        let nextDepsValues = depsValues.slice(1);
+        let dep = deps[0];
+        let depRet = solveVariable(dep.variable, map, dep.type);
+        let nextDeps = deps.slice(1);
         let next = (item) => {
-            map.set(['context', curDep.variable], item);
+            map.set(['context', dep.variable], item);
             let nextTansition = fillFirst(transition, item);
-            let nextValue = reduceDep(nextDepsValues, nextTansition, map);
-            map.remove(['context', curDep]);
+            let nextValue = reduceDeps(nextDeps, nextTansition, map);
+            map.remove(['context', dep.variable]);
             return nextValue;
         };
 
-        return predicateMap[curDep.type].reduce(curDep, next, map);
+        return predicateMap[dep.type].reduce(depRet, next, map);
     }
 };
 
