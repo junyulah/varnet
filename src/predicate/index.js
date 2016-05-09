@@ -17,15 +17,7 @@ let predicateMap = (() => {
     return map;
 })();
 
-let completeReduce = (reduceDepValues) => {
-    for (let i = 0; i < predicates.length; i++) {
-        let predicate = predicates[i];
-        predicate.reduce = predicate.reduce(reduceDepValues);
-    }
-};
-
 module.exports = {
     predicateMap,
-    completeReduce,
     predicates
 };

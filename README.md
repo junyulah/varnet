@@ -2,6 +2,10 @@
 
 A generic approach to solve variables.
 
+[![Build Status](https://travis-ci.org/LoveKino/varnet.svg)](https://travis-ci.org/LoveKino/varnet.svg)
+[![Coverage Status](https://coveralls.io/repos/github/LoveKino/varnet/badge.svg?branch=master)](https://coveralls.io/github/LoveKino/varnet?branch=master)
+
+
 ## A thought to solve problems
 
 - step1: define variables

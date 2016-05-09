@@ -99,26 +99,50 @@ describe('varnet', () => {
         let rets = solve([
             ['domain', x, [3, 4]]
         ], [w, m]);
-        assert.deepEqual(rets,
+        assert.deepEqual(rets, [
+            [
+                [3, [1, 2, 3]],
+                [4, [1, 2, 3, 4]]
+            ],
             [
                 [
-                    [3, [1, 2, 3]],
-                    [4, [1, 2, 3, 4]]
+                    [3, 0],
+                    [3, 1],
+                    [3, 2]
                 ],
                 [
-                    [
-                        [3, 0],
-                        [3, 1],
-                        [3, 2]
-                    ],
-                    [
-                        [4, 0],
-                        [4, 1],
-                        [4, 2],
-                        [4, 3]
-                    ]
+                    [4, 0],
+                    [4, 1],
+                    [4, 2],
+                    [4, 3]
                 ]
             ]
-        );
+        ]);
+    });
+
+    it('dep error', (done) => {
+        try {
+            any(1);
+        } catch (err) {
+            if (err.toString().indexOf('Expect variable') !== -1) {
+                done();
+            } else {
+                done(err);
+            }
+        }
+    });
+
+    it('lack domain', (done) => {
+        try {
+            let x = defVar();
+            let y = defVar(any(x), x => x > 0);
+            solve([], [y]);
+        } catch (err) {
+            if (err.toString().indexOf('lack of domain') !== -1) {
+                done();
+            } else {
+                done(err);
+            }
+        }
     });
 });

@@ -5,6 +5,7 @@ let assert = require('assert');
 
 let defVar = index.defVar;
 let solve = index.solve;
+let domain = index.domain;
 
 describe('varnet', () => {
     it('simple', () => {
@@ -70,5 +71,67 @@ describe('varnet', () => {
             [x, 5]
         ], [z]);
         assert.deepEqual(rets2, [30]);
+    });
+
+    it('error defVar transition', (done) => {
+        try {
+            defVar(1, 2);
+        } catch (err) {
+            if(err.toString().indexOf('Expect function for last arguments of defVar') !== -1) {
+                done();
+            } else {
+                done(err);
+            }
+        }
+    });
+
+    it('error defVar deps', (done) => {
+        try {
+            defVar(1, () => {});
+        } catch (err) {
+            if(err.toString().indexOf('Expect variable') !== -1) {
+                done();
+            } else {
+                done(err);
+            }
+        }
+    });
+
+    it('error domain', (done) => {
+        try {
+            domain(1);
+        } catch (err) {
+            if(err.toString().indexOf('Expect variable') !== -1) {
+                done();
+            } else {
+                done(err);
+            }
+        }
+    });
+
+    it('error domain', (done) => {
+        try {
+            let x = defVar();
+            domain(x, 1);
+        } catch (err) {
+            if(err.toString().indexOf('Expect variable or array for domain') !== -1) {
+                done();
+            } else {
+                done(err);
+            }
+        }
+    });
+
+    it('error solve', (done) => {
+        try {
+            let x = defVar();
+            solve([], [x]);
+        } catch (err) {
+            if(err.toString().indexOf('can not solve variable') !== -1) {
+                done();
+            } else {
+                done(err);
+            }
+        }
     });
 });

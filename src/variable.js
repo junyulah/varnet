@@ -74,7 +74,7 @@ let argToDep = (arg) => {
         };
     } else {
         if (!isVariable(arg)) {
-            throw new TypeError('Expect variable(object) but got ' + arg);
+            throw new TypeError('Expect variable but got ' + arg);
         }
         dep = {
             variable: arg,
@@ -86,11 +86,9 @@ let argToDep = (arg) => {
 
 let domain = (variable, list) => {
     if (!isVariable(variable)) {
-        throw new TypeError('');
+        throw new TypeError('Expect variable but got ' + variable);
     }
-    if (isArray(list)) {
-        variable.domain = list;
-    } else if (isVariable(list)) {
+    if (isArray(list) || isVariable(list)) {
         variable.domain = list;
     } else {
         throw new TypeError('Expect variable or array for domain');
@@ -113,7 +111,7 @@ let isDep = v => isObject(v) && v.mark === unique;
 
 let isVariable = (v) => isObject(v) && v.__variable === unique;
 
-let isAtomVariable = (v) => isVariable(v) && !v.deps && !v.transition;
+let isAtomVariable = (v) => isVariable(v) && !v.deps && !v.transition && !v.domain;
 
 module.exports = {
     defVar,

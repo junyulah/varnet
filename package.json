@@ -4,7 +4,8 @@
   "description": "A generic approach to solve variables",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/**/*.js"
+    "test": "mocha test/**/*.js",
+    "cover": "istanbul cover _mocha"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,10 @@
   },
   "homepage": "https://github.com/LoveKino/varnet#readme",
   "devDependencies": {
-    "mocha": "^2.4.5"
+    "coveralls": "^2.11.9",
+    "istanbul": "^0.4.3",
+    "mocha": "^2.4.5",
+    "mocha-lcov-reporter": "^1.2.0"
   },
   "dependencies": {
     "keysmap": "0.0.1"

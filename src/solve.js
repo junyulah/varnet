@@ -33,9 +33,6 @@ let solveVariable = (variable, map, type) => {
     } else if (map.has(keys(variable, type, 'context'))) { // context cache (context value)
         return map.get(keys(variable, type, 'context'));
     } else {
-        if (!predicateMap[type]) {
-            throw new TypeError('unrecognized predicate type. type ' + type);
-        }
         if (predicateMap[type].use === 'domain') {
             return solveDomain(variable, map);
         } else {
