@@ -28,8 +28,10 @@ let solve = (known, unknown) => {
 };
 
 let solveVariable = (variable, map, type) => {
-    if (map.has(keys(variable, type))) { // look up dit first
+    if (map.has(keys(variable, type))) { // look up dit first (initial value)
         return map.get(keys(variable, type));
+    } else if (map.has(keys(variable, type, 'context'))) { // context cache (context value)
+        return map.get(keys(variable, type, 'context'));
     } else {
         if (!predicateMap[type]) {
             throw new TypeError('unrecognized predicate type. type ' + type);
@@ -37,7 +39,7 @@ let solveVariable = (variable, map, type) => {
         if (predicateMap[type].use === 'domain') {
             return solveDomain(variable, map);
         } else {
-            return solveTransition(variable, map, type);
+            return solveTransition(variable, map);
         }
     }
 };
@@ -50,41 +52,25 @@ let solveDomain = (variable, map) => {
     if (isVariable(domain)) {
         domain = solveVariable(domain, map, 'normal');
     }
-    map.set(keys(variable, 'domain'), domain);
     return domain;
 };
 
-let solveTransition = (variable, map, type) => {
-    // look up context dit
-    if (map.has(['context', variable])) {
-        return map.get(['context', variable]);
-    }
+let solveTransition = (variable, map) => {
     if (isAtomVariable(variable)) {
         throw new Error('can not solve variable, exist none determined variable.');
     }
     // collect deps values
     let deps = variable.deps;
-    let depsValues = [];
-    for (let i = 0; i < deps.length; i++) {
-        let dep = deps[i];
-        let depRet = solveVariable(dep.variable, map, dep.type);
-        depsValues.push({
-            depRet: depRet,
-            type: dep.type,
-            variable: dep.variable
-        });
-    }
     let ret = reduceDeps(deps, variable.transition, map);
 
-    map.set(keys(variable, type), ret);
     return ret;
 };
 
-let keys = (variable, type) => {
+let keys = (variable, type, cacheType) => {
     if (type === 'domain' || predicateMap[type].use === 'domain') {
-        return ['domain', variable];
+        return cacheType ? [cacheType, 'domain', variable] : ['domain', variable];
     } else {
-        return [variable];
+        return cacheType ? [cacheType, variable] : [variable];
     }
 };
 
