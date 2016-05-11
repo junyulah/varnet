@@ -1,6 +1,6 @@
 {
   "name": "varnet",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A generic approach to solve variables",
   "main": "index.js",
   "scripts": {
