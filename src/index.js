@@ -4,6 +4,7 @@ let variable = require('./variable');
 let solve = require('./solve');
 let predicate = require('./predicate');
 let util = require('./util');
+let combinators = require('./combinator');
 
 let dep = variable.dep;
 let predicates = predicate.predicates;
@@ -25,4 +26,4 @@ module.exports = append({
     defVar: variable.defVar,
     solve,
     domain: variable.domain
-}, methods);
+}, append(methods, combinators));
